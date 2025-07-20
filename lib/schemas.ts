@@ -87,7 +87,7 @@ export const creditUserSchema = Joi.object({
 
 // Schema for a credit user group registration form
 export const CreditUserGroupSchema = Joi.object({
-  leaderID: Joi.string().required().label("Leader ID"),
+  leaderName: Joi.string().required().label("Leader Name"),
   memberIDs: Joi.array()
     .items(Joi.string().required())
     .required()
