@@ -11,50 +11,6 @@ export const NAV_DATA = [
         items: [],
       },
       {
-        title: "Credit Users",
-        icon: Icons.Alphabet,
-        items: [
-          {
-            title: "All Users",
-            url: "/admin/credit_users/all_users",
-          },
-          {
-            title: "All User Groups",
-            url: "/admin/credit_users/all_user_groups",
-          },
-        ],
-      },
-      {
-        title: "Loan Details",
-        icon: Icons.FourCircle,
-        items: [
-          {
-            title: "New Loan",
-            url: "/admin/loan_details/new_loan",
-          },
-          {
-            title: "All Loans",
-            url: "/admin/loan_details/all_loans",
-          },
-          {
-            title: "Pending Loans",
-            url: "/admin/loan_details/pending_loans",
-          },
-          {
-            title: "Rejected Loans",
-            url: "/admin/loan_details/rejected_loans",
-          },
-          {
-            title: "Approved Loans",
-            url: "/admin/loan_details/approved_loans",
-          },
-          {
-            title: "Ongoing Loans",
-            url: "/admin/loan_details/ongoing_loans",
-          },
-        ],
-      },
-      {
         title: "Admin Users",
         icon: Icons.User,
         items: [

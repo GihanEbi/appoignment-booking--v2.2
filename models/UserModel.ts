@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document } from 'mongoose';
 
 export interface IUser extends Document {
   ID: string;
@@ -15,8 +15,6 @@ export interface IUser extends Document {
   //   created user details
   userCreated?: string;
   userModified?: string;
-  dateCreated?: Date;
-  dateModified?: Date;
 }
 
 const userSchema = new Schema<IUser>(
@@ -35,10 +33,8 @@ const userSchema = new Schema<IUser>(
     //   created user details
     userCreated: { type: String, required: false },
     userModified: { type: String, required: false },
-    dateCreated: { type: Date, required: false },
-    dateModified: { type: Date, required: false },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
-export default mongoose.models.User || mongoose.model("User", userSchema);
+export default mongoose.models.User || mongoose.model('User', userSchema);
