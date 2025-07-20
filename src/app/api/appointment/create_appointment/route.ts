@@ -8,10 +8,10 @@ import { id_codes } from "@/constants/id_code_constants";
 import { CheckUserAccess } from "@/services/auth-services/auth-service";
 import { access_levels } from "@/constants/access_constants";
 import UserModel from "../../../../../models/UserModel";
-
+import { appointment_constants } from "@/constants/appointment_constants";
 
 export async function POST(req: Request) {
-  const { userId, customerName } = await req.json();
+  const { userId, phoneNo } = await req.json();
   //   no token authentication
   // appointment will created by webhook in n8n
 
@@ -34,28 +34,56 @@ export async function POST(req: Request) {
     );
   }
 
+  // check phone number already in appointment model and appointment status is not equal to pending or confirmed
+  const existingAppointment = await AppointmentModel.find({
+    phoneNo: phoneNo,
+  });
+
+  // if one of the object of existingAppointment has appointmentStatus equal to pending or confirmed
+  if (
+    existingAppointment.length > 0 &&
+    existingAppointment.some(
+      (appointment) =>
+        appointment.appointmentStatus ===
+          appointment_constants.APPOINTMENT_STATUS_OBJECT.pending ||
+        appointment.appointmentStatus ===
+          appointment_constants.APPOINTMENT_STATUS_OBJECT.confirmed,
+    )
+  ) {
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Phone number already exists in another appointment",
+      },
+      { status: 400 },
+    );
+  }
+
   //   create appointment
   let appointment;
   try {
     const ID = await createId(id_codes.idCode.appointment);
     appointment = new AppointmentModel({
-      ID,
-      userId,
-      customerName,
-      userCreated: 'n8n', // Assuming userId is available in the token
+      ID: ID,
+      userId: userId,
+      phoneNo: phoneNo,
+      userCreated: "n8n", // this will be replaced by n8n webhook
     });
 
     await appointment.save();
+
+    return NextResponse.json(
+      {
+        success: true,
+        message: "Appointment created successfully",
+        data: appointment,
+      },
+      { status: 201 },
+    );
   } catch (error) {
     return NextResponse.json(
       { success: false, message: "Error creating appointment", error },
       { status: 500 },
     );
   }
-
-  return NextResponse.json({
-    success: true,
-    message: "Appointment created successfully",
-    data: appointment,
-  });
 }
