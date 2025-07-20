@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { connectDB } from "../../../../lib/db";
-import { CheckUserAccess } from "@/services/auth services/auth-service";
+import { CheckUserAccess } from "@/services/auth-services/auth-service";
 import { access_levels } from "@/constants/access_constants";
 // import multer from "multer";
 // import path from "path";
