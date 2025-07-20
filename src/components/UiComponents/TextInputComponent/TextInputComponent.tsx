@@ -49,7 +49,7 @@ interface componentProps {
   // icon props can be added if needed
   icon?: React.ReactNode;
   iconPosition?: 'left' | 'right';
-  // iconFunction?: Function;
+  iconFunction?: Function;
 }
 
 const TextInputComponent: React.FC<componentProps> = ({
