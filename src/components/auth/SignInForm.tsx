@@ -9,7 +9,7 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import { AlertDialogDemo } from '@/components/AlertDialog/AlertDialog';
 // -------------services-----------------
-import { LoginSchema, UserSchema } from '../../../lib/schemas';
+import { LoginSchema } from '../../../lib/schemas';
 import {
   validation,
   validationProperty,
@@ -17,6 +17,8 @@ import {
 import { Loader } from '@/components/Loader/Loader';
 // import { create_user, login } from '@/routes/users/userRoutes';
 import TextInputComponent from '../UiComponents/TextInputComponent/TextInputComponent';
+import { sign_in_user } from '@/routes/auth/authRoutes';
+import { saveToken } from '@/utils/auth-utils';
 
 // -------------types-----------------
 type variant = 'default' | 'destructive';
@@ -83,38 +85,40 @@ export default function SignInForm() {
       return;
     }
     // -------- prevent multiple submission
-    // if (loading) return;
-    // try {
-    //   setLoading(true);
-    //   const data = await login(form);
+    if (loading) return;
+    try {
+      setLoading(true);
+      const data = await sign_in_user(form);
 
-    //   if (data.success) {
-    //     setAlert({
-    //       open: true,
-    //       message: 'Success',
-    //       description: data.message,
-    //       variant: 'default',
-    //     });
-    //     router.push('/user/appointment_list');
-    //   } else {
-    //     setAlert({
-    //       open: true,
-    //       message: 'Error',
-    //       description: data.message,
-    //       variant: 'destructive',
-    //     });
-    //   }
-    // } catch (error) {
-    //   setAlert({
-    //     open: true,
-    //     message: 'Error',
-    //     description: 'Error adding user',
-    //     variant: 'destructive',
-    //   });
-    // } finally {
-    //   // --------- set loading to false ---------
-    //   setLoading(false);
-    // }
+      if (data.success) {
+        setAlert({
+          open: true,
+          message: 'Success',
+          description: data.message,
+          variant: 'default',
+        });
+        saveToken(data.data.token);
+        // Redirect to user dashboard or home page after successful login
+        router.push('/user/dashboard');
+      } else {
+        setAlert({
+          open: true,
+          message: 'Error',
+          description: data.message,
+          variant: 'destructive',
+        });
+      }
+    } catch (error) {
+      setAlert({
+        open: true,
+        message: 'Error',
+        description: 'Error adding user',
+        variant: 'destructive',
+      });
+    } finally {
+      // --------- set loading to false ---------
+      setLoading(false);
+    }
   };
   return (
     <div className="flex w-full flex-1 flex-col lg:w-1/2">

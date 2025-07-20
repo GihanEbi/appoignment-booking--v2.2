@@ -5,11 +5,8 @@ const commonUrl = '/api/users';
 type User = {
   firstName: string;
   lastName: string;
-  birthday: string;
   email: string;
   phoneNo: string;
-  address: string;
-  userGroupId: string;
 };
 
 // export async function get_users(params: params, searchValue: searchValue) {

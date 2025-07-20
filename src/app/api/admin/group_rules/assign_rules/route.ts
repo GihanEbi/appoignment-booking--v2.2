@@ -69,7 +69,7 @@ export async function POST(req: Request) {
         ID: ID,
         groupId: groupId,
         ruleId: item,
-        userCreated: isValidToken.userId,
+        userCreated: isValidToken.userId, // Assuming userId is available in the token
       });
     }
 

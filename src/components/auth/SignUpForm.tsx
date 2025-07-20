@@ -1,24 +1,25 @@
-'use client';
-import { useRouter } from 'next/navigation';
-import Checkbox from '@/components/form/input/Checkbox';
-import Input from '@/components/form/input/InputField';
-import Label from '@/components/form/Label';
-import { ChevronLeftIcon, EyeCloseIcon, EyeIcon, } from '@/icons';
-import Link from 'next/link';
-import React, { useState } from 'react';
-import { AlertDialogDemo } from '@/components/AlertDialog/AlertDialog';
+"use client";
+import { useRouter } from "next/navigation";
+import Checkbox from "@/components/form/input/Checkbox";
+import Input from "@/components/form/input/InputField";
+import Label from "@/components/form/Label";
+import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from "@/icons";
+import Link from "next/link";
+import React, { useState } from "react";
+import { AlertDialogDemo } from "@/components/AlertDialog/AlertDialog";
 // -------------services-----------------
-import { UserSchema } from '../../../lib/schemas';
+import { UserSchema } from "../../../lib/schemas";
 import {
   validation,
   validationProperty,
-} from '@/services/validation-services/schemaValidation-service';
-import { Loader } from '@/components/Loader/Loader';
-import { create_user } from '@/routes/users/userRoutes';
-import TextInputComponent from '../UiComponents/TextInputComponent/TextInputComponent';
+} from "@/services/validation-services/schemaValidation-service";
+import { Loader } from "@/components/Loader/Loader";
+import { create_user } from "@/routes/users/userRoutes";
+import TextInputComponent from "../UiComponents/TextInputComponent/TextInputComponent";
+import { signup_user } from "@/routes/auth/authRoutes";
 
 // -------------types-----------------
-type variant = 'default' | 'destructive';
+type variant = "default" | "destructive";
 type Alert = {
   open: boolean;
   message: string;
@@ -28,22 +29,20 @@ type Alert = {
 
 export default function SignUpForm() {
   const router = useRouter();
-  const [showPassword, setShowPassword] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
 
   // --------- form for user details ----------
   const [form, setForm] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phoneNo: '',
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNo: "",
   });
   // --------- alert for success and error messages ---------
   const [alert, setAlert] = useState<Alert>({
     open: false,
-    message: '',
-    description: '',
-    variant: 'default',
+    message: "",
+    description: "",
+    variant: "default",
   });
   // --------- state for loading spinner ---------
   const [loading, setLoading] = useState(false);
@@ -85,44 +84,46 @@ export default function SignUpForm() {
       return;
     }
     // -------- prevent multiple submission
-    // if (loading) return;
-    // try {
-    //   setLoading(true);
-    //   const data = await create_user(form);
+    if (loading) return;
+    try {
+      setLoading(true);
+      const data = await signup_user(form);
 
-    //   if (data.success) {
-    //     setAlert({
-    //       open: true,
-    //       message: 'Success',
-    //       description: data.message,
-    //       variant: 'default',
-    //     });
-    //     router.push('/signin');
-    //   } else {
-    //     setAlert({
-    //       open: true,
-    //       message: 'Error',
-    //       description: data.message,
-    //       variant: 'destructive',
-    //     });
-    //   }
-    // } catch (error) {
-    //   setAlert({
-    //     open: true,
-    //     message: 'Error',
-    //     description: 'Error adding user',
-    //     variant: 'destructive',
-    //   });
-    // } finally {
-    //   // --------- set loading to false ---------
-    //   setLoading(false);
-    // }
+      console.log(data);
+
+      if (data.success) {
+        setAlert({
+          open: true,
+          message: "Success",
+          description: data.message,
+          variant: "default",
+        });
+        router.push("/user/dashboard");
+      } else {
+        setAlert({
+          open: true,
+          message: "Error",
+          description: data.message,
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      setAlert({
+        open: true,
+        message: "Error",
+        description: "Error adding user",
+        variant: "destructive",
+      });
+    } finally {
+      // --------- set loading to false ---------
+      setLoading(false);
+    }
   };
 
   return (
     <div className="no-scrollbar flex w-full flex-1 flex-col overflow-y-auto lg:w-1/2">
       {loading && (
-        <div className="fixed top-1/2 left-1/2 z-[9999] -translate-x-1/2 -translate-y-1/2">
+        <div className="fixed left-1/2 top-1/2 z-[9999] -translate-x-1/2 -translate-y-1/2">
           <Loader size={40} className="text-blue-500" />
         </div>
       )}
@@ -155,10 +156,10 @@ export default function SignUpForm() {
                   type="text"
                   value={form.firstName}
                   onChange={(e) => {
-                    handleChange(e.target.value, 'firstName');
+                    handleChange(e.target.value, "firstName");
                   }}
                   placeholder="Enter your first name"
-                  error={formErrors.firstName ? formErrors.firstName : ''}
+                  error={formErrors.firstName ? formErrors.firstName : ""}
                 />
               </div>
               {/* <!-- Last Name --> */}
@@ -169,10 +170,10 @@ export default function SignUpForm() {
                   type="text"
                   value={form.lastName}
                   onChange={(e) => {
-                    handleChange(e.target.value, 'lastName');
+                    handleChange(e.target.value, "lastName");
                   }}
                   placeholder="Enter your last name"
-                  error={formErrors.lastName ? formErrors.lastName : ''}
+                  error={formErrors.lastName ? formErrors.lastName : ""}
                 />
               </div>
               {/* <!-- Email --> */}
@@ -183,10 +184,10 @@ export default function SignUpForm() {
                   type="email"
                   value={form.email}
                   onChange={(e) => {
-                    handleChange(e.target.value, 'email');
+                    handleChange(e.target.value, "email");
                   }}
                   placeholder="Enter your email"
-                  error={formErrors.email ? formErrors.email : ''}
+                  error={formErrors.email ? formErrors.email : ""}
                 />
               </div>
               {/* <!-- Password --> */}
@@ -197,10 +198,10 @@ export default function SignUpForm() {
                   type="text"
                   value={form.phoneNo}
                   onChange={(e) => {
-                    handleChange(e.target.value, 'phoneNo');
+                    handleChange(e.target.value, "phoneNo");
                   }}
                   placeholder="Enter your phone number"
-                  error={formErrors.phoneNo ? formErrors.phoneNo : ''}
+                  error={formErrors.phoneNo ? formErrors.phoneNo : ""}
                 />
               </div>
               {/* <!-- Checkbox --> */}
@@ -235,7 +236,7 @@ export default function SignUpForm() {
             </div>
 
             <div className="mt-5">
-              <p className="text-center text-sm font-normal text-gray-700 sm:text-start dark:text-gray-400">
+              <p className="text-center text-sm font-normal text-gray-700 dark:text-gray-400 sm:text-start">
                 Already have an account?
                 <Link
                   href="/signin"
