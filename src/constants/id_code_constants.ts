@@ -3,8 +3,6 @@ export class id_codes {
     user: "US",
     userGroup: "UG",
     groupRule: 'GR',
-    creditUser: "CUS",
-    creditUserGroup: "CUG",
-    loan: "LO",
+    appointment: "AP",
   };
 }
