@@ -10,7 +10,7 @@ import { Checkbox } from "../FormElements/checkbox";
 
 // --------- services ---------
 import { LoginSchema } from "../../../lib/schemas";
-import { validation, validationProperty } from "@/services/schemaValidation";
+import { validation, validationProperty } from "@/services/validation-services/schemaValidation-service";
 import { Loader } from "../Loader/Loader";
 import { AlertDialogDemo } from "../AlertDialog/AlertDialog";
 import { saveToken } from "@/utils/auth-utils";
