@@ -5,7 +5,7 @@ import { connectDB } from "../../../../../lib/db";
 import AppointmentModel from "../../../../../models/appointmentModel";
 
 export async function POST(req: Request) {
-  const { appointmentId, date, time } = await req.json();
+  const { appointmentId, appointmentStartTime, appointmentEndTime } = await req.json();
 
   //   no token authentication
   // appointment will created by webhook in n8n
@@ -31,8 +31,8 @@ export async function POST(req: Request) {
   }
 
   // ------------ Update date and time -----------
-  appointment[0].appointmentDate = date;
-  appointment[0].appointmentTime = time;
+  appointment[0].appointmentStartTime = appointmentStartTime;
+  appointment[0].appointmentEndTime = appointmentEndTime;
 
   try {
     await appointment[0].save();

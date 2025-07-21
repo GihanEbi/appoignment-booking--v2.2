@@ -7,8 +7,8 @@ export interface IAppointment extends Document {
   customerName: string;
   phoneNo: string;
   service: string;
-  appointmentDate: string;
-  appointmentTime: string;
+  appointmentStartTime: string;
+  appointmentEndTime: string;
   appointmentStatus: string;
   reminder: boolean;
 
@@ -23,8 +23,8 @@ const appointmentSchema = new Schema<IAppointment>(
     customerName: { type: String, required: false },
     phoneNo: { type: String, required: true },
     service: { type: String, required: false },
-    appointmentDate: { type: String, required: false },
-    appointmentTime: { type: String, required: false },
+    appointmentStartTime: { type: String, required: false },
+    appointmentEndTime: { type: String, required: false },
     appointmentStatus: {
       type: String,
       default: appointment_constants.APPOINTMENT_STATUS_OBJECT.pending,

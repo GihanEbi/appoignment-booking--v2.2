@@ -27,7 +27,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <Providers>
+        {/* <Providers> */}
           <NextTopLoader color="#5750F1" showSpinner={false} />
 
           {/* <div className="flex min-h-screen"> */}
@@ -41,7 +41,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
               </main>
             {/* </div>
           </div> */}
-        </Providers>
+        {/* </Providers> */}
       </body>
     </html>
   );
