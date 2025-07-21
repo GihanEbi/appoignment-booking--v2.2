@@ -26,25 +26,12 @@ export async function POST(req: Request) {
       { status: 200 },
     );
   } else {
-    // check if appointment status is not equal to pending or confirmed
-    const filteredAppointments = appointment.filter(
-      (app) =>
-        app.appointmentStatus !== "pending" &&
-        app.appointmentStatus !== "confirmed",
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Appointment found",
+      },
+      { status: 400 },
     );
-    if (filteredAppointments.length > 0) {
-      return NextResponse.json(
-        { success: true, message: "No appointment in this number" },
-        { status: 200 },
-      );
-    } else {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Appointment found",
-        },
-        { status: 400 },
-      );
-    }
   }
 }

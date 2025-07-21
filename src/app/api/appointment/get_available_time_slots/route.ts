@@ -5,13 +5,14 @@ import { connectDB } from "../../../../../lib/db";
 import AppointmentModel from "../../../../../models/appointmentModel";
 import { getNextAvailableSlotsFromAppointments } from "./getNextAvailableSlots";
 
-export async function GET() {
+export async function POST(req: Request) {
+  const { userId } = await req.json();
+
   // const currentTime = new Date().toISOString();
 
   // get all appointments
   await connectDB();
-  const appointments = await AppointmentModel.find({});
-  console.log("Appointments fetched:", appointments);
+  const appointments = await AppointmentModel.find({userId: userId});
 
   const timeSlotList: {
     appointmentStartTime: string;
